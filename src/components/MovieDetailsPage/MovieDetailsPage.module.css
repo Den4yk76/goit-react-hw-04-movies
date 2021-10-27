@@ -1,0 +1,11 @@
+.container {
+    display: flex;
+}
+
+.image{
+    width: 350px;
+}
+
+.filmInfo {
+    margin-left: 15px;
+}

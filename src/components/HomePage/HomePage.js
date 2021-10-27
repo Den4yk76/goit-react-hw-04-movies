@@ -4,36 +4,37 @@ import { Link } from 'react-router-dom';
 import styles from './HomePage.module.css';
 
 export default function HomePage(popularMovies) {
-    const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState([]);
 
-    const base_url = 'https://api.themoviedb.org/3/trending/movie/day';
-    const api_key = '?api_key=c65fb4b4036e2137b5346647b44aa2c0';
-    const url = base_url + api_key;
+  const base_url = 'https://api.themoviedb.org/3/trending/movie/day';
+  const api_key = '?api_key=c65fb4b4036e2137b5346647b44aa2c0';
+  const url = base_url + api_key;
 
-    useEffect(() => {
-        if (movies.length === 0) {
-            axios.get(url).then(res => setMovies(res.data.results));
-        }
-    }, []);
+  useEffect(() => {
+    axios.get(url).then(res => setMovies(res.data.results));
+  }, [url]);
 
-    return (
-        <ul className={styles.list}>
-            {movies.map(movie => {
-                if (movie.title) {
-                    return (
-                        <li key={movie.id}>
-                            <Link>{movie.title}</Link>
-                        </li>
-                    );
-                }
-                if (movie.name) {
-                    return (
-                        <li key={movie.id}>
-                            <Link>{movie.name}</Link>
-                        </li>
-                    );
-                }
-            })}
-        </ul>
-    );
+  return (
+    <>
+      <h1 className={styles.heading}>Trending today</h1>
+      <ul className={styles.list}>
+        {movies.map(movie => {
+          if (movie.title) {
+            return (
+              <li key={movie.id}>
+                <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
+              </li>
+            );
+          }
+          if (movie.name) {
+            return (
+              <li key={movie.id}>
+                <Link>{movie.name}</Link>
+              </li>
+            );
+          }
+        })}
+      </ul>
+    </>
+  );
 }

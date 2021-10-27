@@ -1,4 +1,9 @@
+.heading {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
 .list {
-    padding: 0;
+    padding-left: 15px;
     margin: 0;
 }
