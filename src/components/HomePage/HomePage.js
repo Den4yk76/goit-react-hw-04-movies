@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './HomePage.module.css';
 
-export default function HomePage(popularMovies) {
+export default function HomePage() {
   const [movies, setMovies] = useState([]);
 
   const base_url = 'https://api.themoviedb.org/3/trending/movie/day';
@@ -29,7 +29,7 @@ export default function HomePage(popularMovies) {
           if (movie.name) {
             return (
               <li key={movie.id}>
-                <Link>{movie.name}</Link>
+                <Link to={`/movies/${movie.id}`}>{movie.name}</Link>
               </li>
             );
           }

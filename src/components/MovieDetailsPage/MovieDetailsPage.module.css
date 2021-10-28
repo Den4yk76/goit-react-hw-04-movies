@@ -1,3 +1,15 @@
+.goBackBtn {
+    display: inline-block;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 3px;
+    margin-bottom: 10px
+}
+
+.goBackBtnLink {
+    text-decoration: none;
+}
+
 .container {
     display: flex;
 }
@@ -9,3 +21,15 @@
 .filmInfo {
     margin-left: 15px;
 }
+
+.ganresList {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+}
+
+.ganresListItem:not(:last-child) {
+    margin-right: 10px;
+}
+

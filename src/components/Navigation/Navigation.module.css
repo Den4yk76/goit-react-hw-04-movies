@@ -1,8 +1,7 @@
 .link {
     display: inline-block;
     color: black;
-    margin-right: 15px;
-    margin-bottom: 15px;
+    margin: 10px;
     text-decoration: none;
 }
 .activeLink {
