@@ -1,21 +1,13 @@
-import {
-  useParams,
-  Link,
-  NavLink,
-  useRouteMatch,
-  Route,
-  Switch,
-} from 'react-router-dom';
+import { Link, useRouteMatch, useHistory, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-// import styles from './MovieDetailsPage.module.css';
-// import Cast from '../Cast/Cast';
-// import Reviews from '../Reviews/Reviews';
 
 export default function MoviesPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [movies, setMovies] = useState([]);
   const { url } = useRouteMatch();
+  const history = useHistory();
+  const location = useLocation();
 
   const base_url = 'https://api.themoviedb.org/3/search/movie';
   const api_key = '?api_key=c65fb4b4036e2137b5346647b44aa2c0';
@@ -25,11 +17,28 @@ export default function MoviesPage() {
   const onSubmit = e => {
     e.preventDefault();
     if (searchQuery.trim() !== '') {
-      axios.get(searchUrl).then(res => setMovies(res.data.results));
-      // .then(setSearchQuery(''));
-      //   setSearchQuery('');
+      axios
+        .get(searchUrl)
+        .then(res => setMovies(res.data.results))
+        .then(
+          history.push({
+            ...location,
+            search: `query=${searchQuery}`,
+          }),
+        );
+      // .then(console.log(history));
     } else alert('Add your search query');
   };
+
+  // useEffect(() => {
+  //   if (searchQuery.trim() === '') {
+  //     return;
+  //   }
+  //   const sortOrder = new URLSearchParams(location.search).get('query');
+  //   setSearchQuery(sortOrder);
+  //   console.log(sortOrder);
+  //   axios.get(searchUrl).then(res => setMovies(res.data.results));
+  // }, []);
 
   const onChange = e => {
     setSearchQuery(e.target.value);
