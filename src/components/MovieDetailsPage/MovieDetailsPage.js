@@ -1,6 +1,6 @@
 import {
   useParams,
-  NavLink,
+  Link,
   useRouteMatch,
   Route,
   Switch,
@@ -15,10 +15,8 @@ import Reviews from '../Reviews/Reviews';
 
 export default function MovieDetailsPage() {
   const { url } = useRouteMatch();
-  console.log('url', url);
   const history = useHistory();
   const location = useLocation();
-
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
 
@@ -31,15 +29,13 @@ export default function MovieDetailsPage() {
   }, [movie_url]);
 
   const handleClick = () => {
-    history.push(location?.state?.from ?? '/movies');
-    // history.push(location?.state?.from?.location?.search ?? '');
+    history.push(location.state.from ? location.state.from : '/');
   };
-  console.log('CARD Loaction: ', location);
 
   return (
     <>
       <button type="button" onClick={handleClick}>
-        {location?.state?.label}
+        {location?.state?.label ?? 'Back'}
       </button>
       {movie && (
         <>
@@ -74,30 +70,32 @@ export default function MovieDetailsPage() {
           <h2>Additional information</h2>
           <ul>
             <li>
-              <NavLink
+              <Link
                 to={{
                   pathname: `${url}/cast`,
                   state: {
-                    from: '/movies',
+                    from: history.location.state.from
+                      ? history.location.state.from
+                      : '/movies',
                     label: 'Back to movies from Cast',
                   },
                 }}
               >
                 Cast
-              </NavLink>
+              </Link>
             </li>
             <li>
-              <NavLink
+              <Link
                 to={{
                   pathname: `${url}/reviews`,
                   state: {
-                    from: '/movies',
+                    from: history.location.state.from,
                     label: 'Back to movies from Reviews',
                   },
                 }}
               >
                 Reviews
-              </NavLink>
+              </Link>
             </li>
           </ul>
           <hr />

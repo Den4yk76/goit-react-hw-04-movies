@@ -19,7 +19,11 @@ export default function Cast({ movieId }) {
           <li key={actor.id}>
             <img
               className={styles.actorImage}
-              src={`https://image.tmdb.org/t/p/w500${actor.profile_path}`}
+              src={
+                actor.profile_path
+                  ? `https://image.tmdb.org/t/p/w500${actor.profile_path}`
+                  : 'https://static.wikia.nocookie.net/fastandfurious/images/8/8e/Dom.png'
+              }
               alt=""
             />
             <p>{actor.name}</p>

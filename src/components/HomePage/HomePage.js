@@ -1,10 +1,9 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styles from './HomePage.module.css';
 
 export default function HomePage() {
-  const location = useLocation();
   const [movies, setMovies] = useState([]);
 
   const base_url = 'https://api.themoviedb.org/3/trending/movie/day';

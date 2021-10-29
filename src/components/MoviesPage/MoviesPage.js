@@ -1,4 +1,4 @@
-import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -8,7 +8,6 @@ export default function MoviesPage() {
   const [inputValue, setInputValue] = useState('');
   const history = useHistory();
   const location = useLocation();
-  const params = useParams();
 
   const base_url = 'https://api.themoviedb.org/3/search/movie';
   const api_key = '?api_key=c65fb4b4036e2137b5346647b44aa2c0';
@@ -18,7 +17,12 @@ export default function MoviesPage() {
 
   const onSubmit = e => {
     e.preventDefault();
-    console.log('сработал onSubmit');
+    console.log('location', location);
+    console.log('history', history);
+    console.log(
+      'history.location.pathname + history.location.search: ',
+      history.location.pathname + history.location.search,
+    );
     setSearchQuery(inputValue);
   };
 
@@ -34,7 +38,6 @@ export default function MoviesPage() {
         .get(searchUrl)
         .then(res => setMovies(res.data.results))
         .then(
-          console.log('сработал if (!searchQuery && urlQuery)'),
           history.push({
             ...location,
             search: `query=${urlQuery}`,
@@ -45,7 +48,6 @@ export default function MoviesPage() {
         .get(searchUrl)
         .then(res => setMovies(res.data.results))
         .then(
-          console.log('сработал else'),
           history.push({
             ...location,
             search: `query=${searchQuery}`,
@@ -57,7 +59,6 @@ export default function MoviesPage() {
     setInputValue(e.target.value);
   };
 
-  // console.log('location', location);
   return (
     <>
       <form className="SearchForm" onSubmit={onSubmit}>
@@ -84,11 +85,12 @@ export default function MoviesPage() {
                 <Link
                   to={{
                     pathname: `/movies/${movie.id}`,
+
                     state: {
-                      from: {
-                        location,
-                        label: 'Back to movies from moviePage',
-                      },
+                      from:
+                        `${history.location.pathname}` +
+                        `${history.location.search}`,
+                      label: 'Back to movies from moviePage',
                     },
                   }}
                 >
