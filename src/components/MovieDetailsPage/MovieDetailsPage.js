@@ -4,6 +4,8 @@ import {
   useRouteMatch,
   Route,
   Switch,
+  useHistory,
+  useLocation,
 } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -13,6 +15,9 @@ import Reviews from '../Reviews/Reviews';
 
 export default function MovieDetailsPage() {
   const { url } = useRouteMatch();
+  console.log('url', url);
+  const history = useHistory();
+  const location = useLocation();
 
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
@@ -25,13 +30,17 @@ export default function MovieDetailsPage() {
     axios.get(movie_url).then(res => setMovie(res.data));
   }, [movie_url]);
 
+  const handleClick = () => {
+    history.push(location?.state?.from ?? '/movies');
+    // history.push(location?.state?.from?.location?.search ?? '');
+  };
+  console.log('CARD Loaction: ', location);
+
   return (
     <>
-      <div className={styles.goBackBtn}>
-        <NavLink to="/" exact className={styles.goBackBtnLink}>
-          Go back
-        </NavLink>
-      </div>
+      <button type="button" onClick={handleClick}>
+        {location?.state?.label}
+      </button>
       {movie && (
         <>
           <div className={styles.container}>
@@ -65,22 +74,38 @@ export default function MovieDetailsPage() {
           <h2>Additional information</h2>
           <ul>
             <li>
-              <NavLink to={`${url}/cast`} exact>
+              <NavLink
+                to={{
+                  pathname: `${url}/cast`,
+                  state: {
+                    from: '/movies',
+                    label: 'Back to movies from Cast',
+                  },
+                }}
+              >
                 Cast
               </NavLink>
             </li>
             <li>
-              <NavLink to={`${url}/reviews`} exact>
+              <NavLink
+                to={{
+                  pathname: `${url}/reviews`,
+                  state: {
+                    from: '/movies',
+                    label: 'Back to movies from Reviews',
+                  },
+                }}
+              >
                 Reviews
               </NavLink>
             </li>
           </ul>
           <hr />
           <Switch>
-            <Route path="/movies/:movieId/cast" exact>
+            <Route path="/movies/:movieId/cast">
               <Cast movieId={movieId} />
             </Route>
-            <Route path="/movies/:movieId/reviews" exact>
+            <Route path="/movies/:movieId/reviews">
               <Reviews movieId={movieId} />
             </Route>
           </Switch>

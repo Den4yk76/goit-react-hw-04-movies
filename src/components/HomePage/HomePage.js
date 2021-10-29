@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styles from './HomePage.module.css';
 
 export default function HomePage() {
+  const location = useLocation();
   const [movies, setMovies] = useState([]);
 
   const base_url = 'https://api.themoviedb.org/3/trending/movie/day';
@@ -22,14 +23,34 @@ export default function HomePage() {
           if (movie.title) {
             return (
               <li key={movie.id}>
-                <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
+                <Link
+                  to={{
+                    pathname: `/movies/${movie.id}`,
+                    state: {
+                      from: '/',
+                      label: 'Back to Home',
+                    },
+                  }}
+                >
+                  {movie.title}
+                </Link>
               </li>
             );
           }
           if (movie.name) {
             return (
               <li key={movie.id}>
-                <Link to={`/movies/${movie.id}`}>{movie.name}</Link>
+                <Link
+                  to={{
+                    pathname: `/movies/${movie.id}`,
+                    state: {
+                      from: '/',
+                      label: 'Back to Home',
+                    },
+                  }}
+                >
+                  {movie.name}
+                </Link>
               </li>
             );
           }
