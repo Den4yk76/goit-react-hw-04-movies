@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/components/HomePage/HomePage.module.css"],"names":[],"mappings":"AAAA,yBAEI,eACJ,CAEA,sBACI,iBAAkB,CAClB,QACJ","file":"HomePage.04428740.chunk.css","sourcesContent":[".heading {\r\n    margin: 0;\r\n    margin-bottom: 10px;\r\n}\r\n\r\n.list {\r\n    padding-left: 15px;\r\n    margin: 0;\r\n}"]}
